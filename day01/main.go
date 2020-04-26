@@ -26,6 +26,9 @@ func main() {
 	x := 0
 	y := 0
 
+	visited := make(map[string]bool)
+	dfv := -1
+
 	steps := strings.Split(strings.ReplaceAll(input, " ", ""), ",")
 
 	for _, step := range steps {
@@ -46,21 +49,32 @@ func main() {
 
 		move, _ := strconv.Atoi(step[1:])
 
-		switch d {
-		case 0:
-			y += move
-		case 90:
-			x += move
-		case 180:
-			y -= move
-		case 270:
-			x -= move
-		case 360:
-			y += move
-		default:
-			panic(d)
+		for i := 0; i < move; i++ {
+			switch d {
+			case 0:
+				y++
+			case 90:
+				x++
+			case 180:
+				y--
+			case 270:
+				x--
+			case 360:
+				y++
+			default:
+				panic(d)
+			}
+
+			pos := fmt.Sprintf("%dx%d", x, y)
+
+			if visited[pos] && dfv == -1 {
+				dfv = getDistance(0, 0, x, y)
+			} else {
+				visited[pos] = true
+			}
 		}
 	}
 
 	fmt.Println(getDistance(0, 0, x, y))
+	fmt.Println(dfv)
 }
