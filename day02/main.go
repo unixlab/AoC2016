@@ -39,4 +39,44 @@ func main() {
 		fmt.Printf("%d", pad[x][y])
 	}
 	fmt.Println()
+
+	newPad := [7][7]string{
+		[7]string{"x", "x", "x", "x", "x", "x", "x"},
+		[7]string{"x", "x", "x", "5", "x", "x", "x"},
+		[7]string{"x", "x", "2", "6", "A", "x", "x"},
+		[7]string{"x", "1", "3", "7", "B", "D", "x"},
+		[7]string{"x", "x", "4", "8", "C", "x", "x"},
+		[7]string{"x", "x", "x", "9", "x", "x", "x"},
+		[7]string{"x", "x", "x", "x", "x", "x", "x"}}
+
+	x = 1
+	y = 3
+	file.Seek(0, 0)
+	scanner = bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		for i := 0; i < len(line); i++ {
+			switch line[i] {
+			case 'U':
+				if newPad[x][y-1] != "x" {
+					y--
+				}
+			case 'D':
+				if newPad[x][y+1] != "x" {
+					y++
+				}
+			case 'L':
+				if newPad[x-1][y] != "x" {
+					x--
+				}
+			case 'R':
+				if newPad[x+1][y] != "x" {
+					x++
+				}
+			}
+		}
+		fmt.Printf("%s", newPad[x][y])
+	}
+	fmt.Println()
 }
