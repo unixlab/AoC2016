@@ -56,9 +56,27 @@ func verifyChecksum(room string, checksum string) bool {
 
 	if strings.Join(calcCheckSum, "") == checksum {
 		return true
-	} else {
-		return false
 	}
+	return false
+}
+
+func shiftBy(input string, counter int) string {
+	for i := 0; i < len(input); i++ {
+		char := rune(input[i])
+		for j := 0; j < counter; j++ {
+			if int(char) == 122 {
+				char = 'a'
+			} else if char == ' ' {
+				char = '-'
+			} else if char == '-' {
+				char = ' '
+			} else {
+				char = rune(int(char) + 1)
+			}
+		}
+		input = input[:i] + string(char) + input[i+1:]
+	}
+	return input
 }
 
 func main() {
@@ -71,11 +89,28 @@ func main() {
 		room := strings.ReplaceAll(input[:sep], "-", "")
 		bracketPos := strings.Index(input, "[")
 		checksum := input[bracketPos+1 : len(input)-1]
-		sectorId, _ := strconv.Atoi(input[sep+1 : bracketPos])
+		sectorID, _ := strconv.Atoi(input[sep+1 : bracketPos])
 
 		if verifyChecksum(room, checksum) {
-			sum += sectorId
+			sum += sectorID
 		}
 	}
 	fmt.Println(sum)
+
+	file.Seek(0, 0)
+	scanner = bufio.NewScanner(file)
+	for scanner.Scan() {
+		input := scanner.Text()
+		bracketPos := strings.Index(input, "[")
+		input = input[:bracketPos]
+		sep := strings.LastIndex(input, "-")
+		seq, _ := strconv.Atoi(input[sep+1:])
+		input = input[:sep]
+
+		input = shiftBy(input, seq)
+
+		if strings.HasPrefix(input, "north") {
+			fmt.Println(seq)
+		}
+	}
 }
