@@ -20,20 +20,29 @@ func main() {
 		}
 	}
 
+	var minWord, maxWord string
 	for _, row := range rows {
 		chars := make(map[string]int, len(row))
 		for _, v := range row {
 			chars[v]++
 		}
+		minKey := ""
 		maxKey := ""
+		minValue := 0
 		maxValue := 0
 		for k, v := range chars {
 			if v > maxValue {
 				maxKey = k
 				maxValue = v
 			}
+			if v < minValue || minValue == 0 {
+				minKey = k
+				minValue = v
+			}
 		}
-		fmt.Printf("%s", maxKey)
+		minWord += minKey
+		maxWord += maxKey
 	}
-	fmt.Println()
+	fmt.Println(maxWord)
+	fmt.Println(minWord)
 }
