@@ -6,6 +6,8 @@ import (
 	"os"
 	"regexp"
 	"strconv"
+
+	"github.com/fatih/color"
 )
 
 func main() {
@@ -81,4 +83,15 @@ func main() {
 	}
 
 	fmt.Println(counter)
+
+	for y := 0; y < len(grid[0]); y++ {
+		for x := 0; x < len(grid); x++ {
+			if grid[x][y] {
+				color.New(color.BgWhite).Printf(" ")
+			} else {
+				color.New(color.BgBlack).Printf(" ")
+			}
+		}
+		fmt.Println()
+	}
 }
