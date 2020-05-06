@@ -119,4 +119,5 @@ func main() {
 			panic("unkown line")
 		}
 	}
+	fmt.Println(output[0] * output[1] * output[2])
 }
