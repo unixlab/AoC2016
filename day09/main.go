@@ -8,16 +8,33 @@ import (
 	"strings"
 )
 
+func decompressedLength(input string) int {
+	pos := strings.Index(input, "(")
+	if pos > 0 {
+		return pos + decompressedLength(input[pos:])
+	}
+	if pos == 0 {
+		stringNumbers := strings.Split(input[pos+1:strings.Index(input, ")")], "x")
+		length, _ := strconv.Atoi(stringNumbers[0])
+		start := pos + 1 + strings.Index(input, ")")
+		realLength := decompressedLength(input[start : start+length])
+		repeat, _ := strconv.Atoi(stringNumbers[1])
+		return pos + realLength*repeat + decompressedLength(input[pos+strings.Index(input, ")")+1+length:])
+	}
+	return len(input)
+}
+
 func main() {
-	var input, output string
+	var line, input, output string
 
 	file, _ := os.Open("input.txt")
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		input = scanner.Text()
+		line = scanner.Text()
 	}
 
 	pos := 0
+	input = line
 	for pos < len(input) {
 		if strings.Index(input[pos:], "(") > -1 {
 			startPos := strings.Index(input[pos:], "(")
@@ -37,4 +54,5 @@ func main() {
 		}
 	}
 	fmt.Println(len(output))
+	fmt.Println(decompressedLength(line))
 }
