@@ -57,4 +57,6 @@ func main() {
 	}
 
 	fmt.Printf("part 1 => %d\n", runInstructions(register, instructions))
+	register["c"] = 1
+	fmt.Printf("part 2 => %d\n", runInstructions(register, instructions))
 }
