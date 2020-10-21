@@ -77,4 +77,14 @@ func main() {
 	}
 	calculateDistance(Position{1, 1}, 0)
 	fmt.Printf("part 1 => %d\n", distance[39][31])
+
+	countUnder50 := 0
+	for _, row := range distance {
+		for _, field := range row {
+			if field <= 50 && field > 0 {
+				countUnder50++
+			}
+		}
+	}
+	fmt.Printf("part 2 => %d\n", countUnder50)
 }
