@@ -40,15 +40,34 @@ func main() {
 		discs = append(discs, currentDisc)
 	}
 
+	part1Discs := make([]Disc, len(discs))
+	copy(part1Discs, discs)
+
+	part2Discs := make([]Disc, len(discs))
+	copy(part2Discs, discs)
+	part2Discs = append(part2Discs, Disc{11, 0})
+
 	time := 0
 	for {
-		for i := 0; i < len(discs); i++ {
-			discs[i].currentPosition = (discs[i].currentPosition + 1) % discs[i].Positions
+		for i := 0; i < len(part1Discs); i++ {
+			part1Discs[i].currentPosition = (part1Discs[i].currentPosition + 1) % part1Discs[i].Positions
 		}
-		if checkAllPos(discs) {
+		if checkAllPos(part1Discs) {
 			break
 		}
 		time++
 	}
-	fmt.Println(time)
+	fmt.Printf("part 1 => %d\n", time)
+
+	time = 0
+	for {
+		for i := 0; i < len(part2Discs); i++ {
+			part2Discs[i].currentPosition = (part2Discs[i].currentPosition + 1) % part2Discs[i].Positions
+		}
+		if checkAllPos(part2Discs) {
+			break
+		}
+		time++
+	}
+	fmt.Printf("part 2 => %d\n", time)
 }
