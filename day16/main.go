@@ -55,4 +55,5 @@ func getChecksum(s string) string {
 func main() {
 	fmt.Printf("example => %s\n", getChecksum(generateData("10000", 20)))
 	fmt.Printf("part 1  => %s\n", getChecksum(generateData("11110010111001001", 272)))
+	fmt.Printf("part 2  => %s\n", getChecksum(generateData("11110010111001001", 35651584)))
 }
